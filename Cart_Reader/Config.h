@@ -31,7 +31,7 @@
 
 //#define HW5
 //#define HW4
-//#define HW3
+#define HW3
 //#define HW2
 //#define HW1
 //#define SERIAL_MONITOR
@@ -62,6 +62,14 @@
 */
 
 //#define ENABLE_RTC
+
+/****/
+
+/* [ six_slot_adapter --------------------------------------------- ]
+    Enable 1k resistor test on six_slot_adapter.
+*/
+
+//#define ENABLE_SIX_SLOT_ADAPTER_TESTS
 
 /****/
 
@@ -181,22 +189,22 @@
 /* [ Flash Repros (all systems, SNES repro also needs FLASH8)------ ]
 */
 
-//#define ENABLE_FLASH 
+#define ENABLE_FLASH 
 
 /****/
 
 /* [ Flashrom Programmer Menu & SNES Repros------------------------ ]
 */
 
-//#define ENABLE_FLASH8 
-//#define ENABLE_FLASH16 
+#define ENABLE_FLASH8 
+#define ENABLE_FLASH16 
 
 /****/
 
 /* [ Game Boy (Color) and Advance --------------------------------- ]
 */
 
-#define ENABLE_GBX
+//#define ENABLE_GBX
 
 /****/
 
@@ -224,7 +232,7 @@
 /* [ Nintendo 64 -------------------------------------------------- ]
 */
 
-#define ENABLE_N64
+//#define ENABLE_N64
 //#define ENABLE_CONTROLLERTEST
 
 /****/
@@ -232,7 +240,7 @@
 /* [ Nintendo Entertainment System/Family Computer ---------------- ]
 */
 
-#define ENABLE_NES
+//#define ENABLE_NES
 
 /****/
 
@@ -274,21 +282,21 @@
 /* [ Sega Master System/Mark III/Game Gear/SG-1000 ---------------- ]
 */
 
-#define ENABLE_SMS
+//#define ENABLE_SMS
 
 /****/
 
 /* [ Sega Mega Drive/Genesis -------------------------------------- ]
 */
 
-#define ENABLE_MD
+//#define ENABLE_MD
 
 /****/
 
 /* [ Super Famicom SF Memory Cassette (needs ENABLE_SNES)---------- ]
 */
 
-//#define ENABLE_SFM
+#define ENABLE_SFM
 
 /****/
 
@@ -309,7 +317,7 @@
 /* [ Super Famicom Game Processor RAM Cassette (needs ENABLE_SNES)- ]
 */
 
-//#define ENABLE_GPC
+#define ENABLE_GPC
 
 /****/
 
@@ -451,7 +459,7 @@ also needs ENABLE_FLASH8 and ENABLE_FLASH16 to be enabled
     other than HW5 and HW3.
 */
 
-#define ENABLE_UPDATER
+//#define ENABLE_UPDATER
 
 /****/
 
@@ -488,8 +496,8 @@ also needs ENABLE_FLASH8 and ENABLE_FLASH16 to be enabled
     Toggle clock calibration menu and whether or not to use calibration data from snes_clk.txt
 */
 
-//#define OPTION_CLOCKGEN_CALIBRATION
-//#define OPTION_CLOCKGEN_USE_CALIBRATION
+#define OPTION_CLOCKGEN_CALIBRATION
+#define OPTION_CLOCKGEN_USE_CALIBRATION
 
 /****/
 

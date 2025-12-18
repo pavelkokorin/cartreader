@@ -117,7 +117,8 @@ typedef enum COLOR_T {
 // Graphic I2C OLED
 #ifdef ENABLE_OLED
 #include <U8g2lib.h>
-U8G2_SSD1306_128X64_NONAME_F_HW_I2C display(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
+//U8G2_SSD1306_128X64_NONAME_F_HW_I2C display(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
+U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C display(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 #endif
 
 // Adafruit Clock Generator
@@ -1625,6 +1626,7 @@ void selfTest() {
   wait();
   display_Clear();
 
+#ifdef ENABLE_SIX_SLOT_ADAPTER_TESTS
   // Test if pin 7 is held high by 1K resistor
   pinMode(7, INPUT);
   println_Msg(F("Testing 1K resistor "));
@@ -1640,6 +1642,7 @@ void selfTest() {
     wait();
     resetArduino();
   }
+#endif
 
   println_Msg(F("Testing short to GND"));
   display_Update();

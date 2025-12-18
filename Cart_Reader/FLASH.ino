@@ -84,6 +84,7 @@ void flashMenu() {
       break;
 
     case 1:
+      mapping = 223;
       setup_Flash8();
       id_Flash8();
       wait();
@@ -144,6 +145,7 @@ void flashMenu() {
       break;
 
     case 1:
+      mapping = 223;
       setup_Flash8();
       id_Flash8();
       wait();
@@ -1062,6 +1064,34 @@ void writeByte_Flash(unsigned long myAddress, byte myData) {
     // Flip BA6(PL6) to address second rom chip
     PORTL ^= (1 << 6);
   }
+  // for SNES HiRom repro with 2MB+1MB (FF5.P1)
+  else if (mapping == 221) {
+    // A8-A15
+    PORTK = (myAddress >> 8) & 0xFF;
+    // A16-A23
+    PORTL = (myAddress >> 16) & 0xFF;
+    // Flip BA5(PL5) to address second rom chip
+    PORTL ^= (1 << 4);
+    // Switch SNES BA6(PL6) to HIGH to disable SRAM
+    PORTL |= (1 << 6);
+  }
+  // for SNES ExHiRom repro with 2MB+1MB (FF5.P0)
+  else if (mapping == 223) {
+    // A8-A15
+    PORTK = (myAddress >> 8) & 0xFF;
+    // A16-A22
+    PORTL = (myAddress >> 16) & 0xFF;
+    // Reset A20 to enable P0 rom and shift to address to A21
+    if ((((myAddress >> 16) & 0xFF) & 0x10)) {
+      // Switch A21
+      PORTL |= (1 << 5);
+      // Reset A20 to enable P0
+      PORTL &= ~(1 << 4);
+    } else if (!(((myAddress >> 16) & 0xFF) & 0x10)) {
+      // Reset A21
+      PORTL &= ~(1 << 5);
+    }
+  }
   // for SNES HiRom repro with 2x 2MB
   else if (mapping == 222) {
     // A8-A15
@@ -1256,6 +1286,17 @@ byte readByte_Flash(unsigned long myAddress) {
     // Flip BA6(PL6) to address second rom chip
     PORTL ^= (1 << 6);
   }
+  // for SNES HiRom repro with 2x 1MB (FF5)
+  else if (mapping == 221) {
+    // A8-A15
+    PORTK = (myAddress >> 8) & 0xFF;
+    // A16-A23
+    PORTL = (myAddress >> 16) & 0xFF;
+    // Flip BA5(PL5) to address second rom chip
+    PORTL ^= (1 << 4);
+    // Switch SNES BA6(PL6) to HIGH to disable SRAM
+    PORTL |= (1 << 6);
+  }
   // for SNES HiRom repro with 2x 2MB
   else if (mapping == 222) {
     // A8-A15
@@ -1266,6 +1307,23 @@ byte readByte_Flash(unsigned long myAddress) {
     PORTL ^= (1 << 5);
     // Switch SNES BA6(PL6) to HIGH to disable SRAM
     PORTL |= (1 << 6);
+  }
+  // for SNES ExHiRom repro with 2MB+1MB (FF5.P0)
+  else if (mapping == 223) {
+    // A8-A15
+    PORTK = (myAddress >> 8) & 0xFF;
+    // A16-A22
+    PORTL = (myAddress >> 16) & 0xFF;
+    // Reset A20 to enable P0 rom and shift to A21
+    if ((((myAddress >> 16) & 0xFF) & 0x10)) {
+      // Switch A21
+      PORTL |= (1 << 5);
+      // Reset A20 to enable P0
+      PORTL &= ~(1 << 4);
+    } else if (!(((myAddress >> 16) & 0xFF) & 0x10)) {
+      // Reset A21
+      PORTL &= ~(1 << 5);
+    }
   }
   // for SNES ExLoRom repro with 2x 4MB
   else if (mapping == 124) {
